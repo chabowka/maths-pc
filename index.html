@@ -1,1 +1,650 @@
-<meta http-equiv="refresh" content="0; url=1_1_espaces_vectoriels.html">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathématiques ICNA — Fiches de révision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:       #0d1117;
+    --surface:  #161b22;
+    --surface2: #1c2330;
+    --border:   #2a3140;
+    --ink:      #e6edf3;
+    --ink2:     #8b949e;
+    --muted:    #484f58;
+    --gold:     #d4a843;
+    --blue:     #58a6ff;
+    --green:    #3fb950;
+    --red:      #f85149;
+    --violet:   #bc8cff;
+    --orange:   #f0883e;
+    --teal:     #39d0d8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    border-bottom: 1px solid var(--border);
+    padding: 52px 32px 36px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .progress-global {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    max-width: 200px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: var(--gold);
+    width: 2%; /* 1 fiche sur ~50 */
+    transition: width 0.8s ease;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+
+  /* ── CHAPTER BLOCK ── */
+  .chapter {
+    margin-bottom: 40px;
+    animation: slideUp 0.5s ease both;
+  }
+
+  .chapter:nth-child(1) { animation-delay: 0.05s; }
+  .chapter:nth-child(2) { animation-delay: 0.10s; }
+  .chapter:nth-child(3) { animation-delay: 0.15s; }
+  .chapter:nth-child(4) { animation-delay: 0.20s; }
+  .chapter:nth-child(5) { animation-delay: 0.25s; }
+  .chapter:nth-child(6) { animation-delay: 0.30s; }
+  .chapter:nth-child(7) { animation-delay: 0.35s; }
+
+  .chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .chapter-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    flex: 1;
+  }
+
+  .chapter-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ── COLOR THEMES PER CHAPTER ── */
+  .ch-1 .chapter-num { background: rgba(212,168,67,0.12);  color: var(--gold);   border: 1px solid rgba(212,168,67,0.25); }
+  .ch-2 .chapter-num { background: rgba(88,166,255,0.10);  color: var(--blue);   border: 1px solid rgba(88,166,255,0.2); }
+  .ch-3 .chapter-num { background: rgba(63,185,80,0.10);   color: var(--green);  border: 1px solid rgba(63,185,80,0.2); }
+  .ch-4 .chapter-num { background: rgba(188,140,255,0.10); color: var(--violet); border: 1px solid rgba(188,140,255,0.2); }
+  .ch-5 .chapter-num { background: rgba(248,81,73,0.10);   color: var(--red);    border: 1px solid rgba(248,81,73,0.2); }
+  .ch-6 .chapter-num { background: rgba(240,136,62,0.10);  color: var(--orange); border: 1px solid rgba(240,136,62,0.2); }
+  .ch-7 .chapter-num { background: rgba(57,208,216,0.10);  color: var(--teal);   border: 1px solid rgba(57,208,216,0.2); }
+
+  .ch-1 .chapter-title { color: var(--gold); }
+  .ch-2 .chapter-title { color: var(--blue); }
+  .ch-3 .chapter-title { color: var(--green); }
+  .ch-4 .chapter-title { color: var(--violet); }
+  .ch-5 .chapter-title { color: var(--red); }
+  .ch-6 .chapter-title { color: var(--orange); }
+  .ch-7 .chapter-title { color: var(--teal); }
+
+  /* ── FICHES GRID ── */
+  .fiches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  /* ── FICHE ITEM ── */
+  .fiche {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--ink2);
+    font-size: 15px;
+    transition: background 0.15s, border-color 0.15s, transform 0.15s, color 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fiche:hover {
+    background: var(--surface2);
+    transform: translateX(3px);
+    color: var(--ink);
+  }
+
+  .fiche.done {
+    color: var(--ink);
+  }
+
+  .fiche.done::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+
+  .ch-1 .fiche.done { border-color: rgba(212,168,67,0.3); }
+  .ch-1 .fiche.done::before { background: var(--gold); }
+  .ch-1 .fiche:hover { border-color: rgba(212,168,67,0.4); }
+
+  .ch-2 .fiche.done { border-color: rgba(88,166,255,0.3); }
+  .ch-2 .fiche.done::before { background: var(--blue); }
+  .ch-2 .fiche:hover { border-color: rgba(88,166,255,0.4); }
+
+  .ch-3 .fiche.done { border-color: rgba(63,185,80,0.3); }
+  .ch-3 .fiche.done::before { background: var(--green); }
+  .ch-3 .fiche:hover { border-color: rgba(63,185,80,0.4); }
+
+  .ch-4 .fiche.done { border-color: rgba(188,140,255,0.3); }
+  .ch-4 .fiche.done::before { background: var(--violet); }
+  .ch-4 .fiche:hover { border-color: rgba(188,140,255,0.4); }
+
+  .ch-5 .fiche.done { border-color: rgba(248,81,73,0.3); }
+  .ch-5 .fiche.done::before { background: var(--red); }
+  .ch-5 .fiche:hover { border-color: rgba(248,81,73,0.4); }
+
+  .ch-6 .fiche.done { border-color: rgba(240,136,62,0.3); }
+  .ch-6 .fiche.done::before { background: var(--orange); }
+  .ch-6 .fiche:hover { border-color: rgba(240,136,62,0.4); }
+
+  .ch-7 .fiche.done { border-color: rgba(57,208,216,0.3); }
+  .ch-7 .fiche.done::before { background: var(--teal); }
+  .ch-7 .fiche:hover { border-color: rgba(57,208,216,0.4); }
+
+  .fiche-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  .fiche-name {
+    flex: 1;
+    line-height: 1.35;
+  }
+
+  .fiche-status {
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .fiche.todo .fiche-status { opacity: 0.3; }
+
+  /* pointer change */
+  .fiche.todo { cursor: default; pointer-events: none; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 20px 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .hero, .main { padding-left: 16px; padding-right: 16px; }
+    .fiches-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-tag">Fiches de révision · CPGE PC</div>
+    <h1>Mathématiques <em>ICNA</em></h1>
+    <div class="progress-global">
+      <span>Progression</span>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill"></div></div>
+      <span>1 / 50 fiches</span>
+    </div>
+  </div>
+  <div class="hero-meta">
+    7 chapitres<br>
+    50 fiches<br>
+    ICNA · PC
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ── 1. ALGÈBRE LINÉAIRE ── -->
+  <div class="chapter ch-1">
+    <div class="chapter-header">
+      <div class="chapter-num">01</div>
+      <div class="chapter-title">Algèbre linéaire</div>
+      <div class="chapter-count">9 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <a href="1_1_espaces_vectoriels.html" class="fiche done">
+        <span class="fiche-num">1.1</span>
+        <span class="fiche-name">Espaces vectoriels &amp; sommes directes</span>
+        <span class="fiche-status">✓</span>
+      </a>
+      <div class="fiche todo">
+        <span class="fiche-num">1.2</span>
+        <span class="fiche-name">Matrices par blocs &amp; sous-espaces stables</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.3</span>
+        <span class="fiche-name">Trace</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.4</span>
+        <span class="fiche-name">Polynômes d'endomorphismes</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.5</span>
+        <span class="fiche-name">Interpolation de Lagrange</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.6</span>
+        <span class="fiche-name">Éléments propres &amp; spectre</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.7</span>
+        <span class="fiche-name">Polynôme caractéristique &amp; Cayley-Hamilton</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.8</span>
+        <span class="fiche-name">Diagonalisation</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">1.9</span>
+        <span class="fiche-name">Trigonalisation</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. ESPACES EUCLIDIENS ── -->
+  <div class="chapter ch-2">
+    <div class="chapter-header">
+      <div class="chapter-num">02</div>
+      <div class="chapter-title">Espaces euclidiens</div>
+      <div class="chapter-count">5 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">2.1</span>
+        <span class="fiche-name">Isométries vectorielles</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">2.2</span>
+        <span class="fiche-name">Matrices orthogonales &amp; O(n)</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">2.3</span>
+        <span class="fiche-name">Isométries du plan</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">2.4</span>
+        <span class="fiche-name">Théorème spectral</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">2.5</span>
+        <span class="fiche-name">Endomorphismes positifs</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. ESPACES VECTORIELS NORMÉS ── -->
+  <div class="chapter ch-3">
+    <div class="chapter-header">
+      <div class="chapter-num">03</div>
+      <div class="chapter-title">Espaces vectoriels normés</div>
+      <div class="chapter-count">6 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">3.1</span>
+        <span class="fiche-name">Normes &amp; distance</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">3.2</span>
+        <span class="fiche-name">Convergence de suites</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">3.3</span>
+        <span class="fiche-name">Comparaison de normes</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">3.4</span>
+        <span class="fiche-name">Topologie</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">3.5</span>
+        <span class="fiche-name">Limite &amp; continuité</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">3.6</span>
+        <span class="fiche-name">Dimension finie</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. SUITES & SÉRIES DE FONCTIONS ── -->
+  <div class="chapter ch-4">
+    <div class="chapter-header">
+      <div class="chapter-num">04</div>
+      <div class="chapter-title">Suites &amp; séries de fonctions</div>
+      <div class="chapter-count">7 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">4.1</span>
+        <span class="fiche-name">Séries numériques (compléments)</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.2</span>
+        <span class="fiche-name">Convergence simple, uniforme, normale</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.3</span>
+        <span class="fiche-name">Régularité — suites de fonctions</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.4</span>
+        <span class="fiche-name">Régularité — séries de fonctions</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.5</span>
+        <span class="fiche-name">Séries entières &amp; rayon de convergence</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.6</span>
+        <span class="fiche-name">Régularité de la somme</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">4.7</span>
+        <span class="fiche-name">DSE des fonctions usuelles</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. INTÉGRATION ── -->
+  <div class="chapter ch-5">
+    <div class="chapter-header">
+      <div class="chapter-num">05</div>
+      <div class="chapter-title">Intégration</div>
+      <div class="chapter-count">6 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">5.1</span>
+        <span class="fiche-name">Fonctions continues par morceaux</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">5.2</span>
+        <span class="fiche-name">Intégrales généralisées</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">5.3</span>
+        <span class="fiche-name">Fonctions intégrables L¹</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">5.4</span>
+        <span class="fiche-name">Convergence dominée</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">5.5</span>
+        <span class="fiche-name">Intégration terme à terme</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">5.6</span>
+        <span class="fiche-name">Intégrales à paramètre</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. PROBABILITÉS ── -->
+  <div class="chapter ch-6">
+    <div class="chapter-header">
+      <div class="chapter-num">06</div>
+      <div class="chapter-title">Probabilités</div>
+      <div class="chapter-count">8 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">6.1</span>
+        <span class="fiche-name">Dénombrabilité &amp; familles sommables</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.2</span>
+        <span class="fiche-name">Espace probabilisé &amp; événements</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.3</span>
+        <span class="fiche-name">Probabilités conditionnelles &amp; indépendance</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.4</span>
+        <span class="fiche-name">Variables aléatoires &amp; lois usuelles</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.5</span>
+        <span class="fiche-name">Espérance</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.6</span>
+        <span class="fiche-name">Variance &amp; covariance</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.7</span>
+        <span class="fiche-name">Fonctions génératrices</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">6.8</span>
+        <span class="fiche-name">Inégalités &amp; loi des grands nombres</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. CALCUL DIFFÉRENTIEL ── -->
+  <div class="chapter ch-7">
+    <div class="chapter-header">
+      <div class="chapter-num">07</div>
+      <div class="chapter-title">Calcul différentiel</div>
+      <div class="chapter-count">6 fiches</div>
+    </div>
+    <div class="fiches-grid">
+      <div class="fiche todo">
+        <span class="fiche-num">7.1</span>
+        <span class="fiche-name">Fonctions vectorielles dérivables</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">7.2</span>
+        <span class="fiche-name">Dérivées partielles &amp; classe C¹</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">7.3</span>
+        <span class="fiche-name">Différentielle &amp; gradient</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">7.4</span>
+        <span class="fiche-name">Règle de la chaîne</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">7.5</span>
+        <span class="fiche-name">Hessienne &amp; Taylor ordre 2</span>
+        <span class="fiche-status">○</span>
+      </div>
+      <div class="fiche todo">
+        <span class="fiche-num">7.6</span>
+        <span class="fiche-name">Extremums</span>
+        <span class="fiche-status">○</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Mathématiques ICNA · CPGE PC</span>
+  <span>github.com/chabowka/maths-pc</span>
+</footer>
+
+</body>
+</html>
